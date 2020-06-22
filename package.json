@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
-    "dotenv": "^8.2.0"
+    "jsdoc-template": "^1.2.0"
   },
   "repository": {
     "type": "git",

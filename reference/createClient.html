@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> mburger.js</title>
+  <title> createClient</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -85,114 +83,239 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>mburger.js</h1>
+                    <p>Class</p>
+                    <h1>createClient</h1>
                 </header>
                 
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const axios = require('axios');
+        <h2><span class="attribs"><span class="type-signature"></span></span>createClient<span class="signature">(api_key)</span><span class="type-signature"> &rarr; {MBurgerInstance}</span></h2>
+        
+    
+</header>
 
-const host = "https://mburger.cloud/api/";
-const headers = {
-    'Accept': 'application/json',
-    'X-MBurger-Version': 3,
-};
-
-/**
- * Initiate an MBurger connection.
- *
- * @constructor
- * @param {string} api_key - MBurger project API Key.
- * @returns {MBurgerInstance}
- * @example
- * // Import MBurger SDK
- * const mburger = require('mburger');
- *
- * // Init the connection
- * const instance = mburger.createClient('a1b2c3d4');
- *
- */
-export function createClient(api_key) {
-    return MBurgerInstance(
-        axios.create({
-            baseURL: host,
-            headers: {
-                ...{'X-MBurger-Token': api_key},
-                ...headers
-            }
-        })
-    );
-}
-
-export function MBurgerInstance(axiosInstance) {
-
-    /**
-     * Retrieve a single section.
-     *
-     * @constructor
-     * @param {integer} section_id - ID of the requested Section from MBurger.
-     * @param {boolean} [original_media=false] - Indicate if you want the original media or the converted ones.
-     * @param {object} [params={}] - The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.
-     * @param {object} [filters={}] - The filters you want to pass to the MBurger filters variable. Check our API Reference for more informations.
-     * @param {boolean} [order_asc=true] - Express if you want the data in ascendent or descendent order.
-     * @param {integer} [cache_seconds=0] - Number of seconds you want to keep the API response stored in your local cache.
-     * @param {boolean} [use_slug=false] - Declare if you want to use the section slug instead of the ID to retrieve data.
-     * @returns {object}
-     * @example
-     * // Import MBurger SDK
-     * const mburger = require('mburger');
-     *
-     * // Init the connection
-     * const instance = mburger.createClient('a1b2c3d4');
-     *
-     * // Retrieve data from the section 1234
-     * let data = instance.getSection(1234);
-     * console.log(data);
-     */
-    function getSection(section_id, original_media = false, params = {}, filters = {}, order_asc = true, cache_seconds = false, use_slug = false) {
-        let path = 'sections/' + section_id + '/elements';
-
-        let query = {
-            ...params,
-            ...{
-                original_media: original_media,
-                locale: 'it',
-                force_locale_fallback: true,
-                use_slug: use_slug
-            }
-        };
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
 
 
-        // AXIOS GET Call to MBurger
-        axiosInstance.get(host + path, {
-            params: params,
-            headers: headers
-        })
-            .then(function (response) {
-                console.log(response);
-                return response;
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
+    
+    <h4 class="name" id="createClient">
+        <a class="href-link" href="#createClient">#</a>
+        
+        <span class="code-name">
+            
+                new createClient<span class="signature">(api_key)</span><span class="type-signature"> &rarr; {MBurgerInstance}</span>
+            
+        </span>
+    </h4>
+    
 
-    }
+    
+    
+    <div class="description">
+        Initiate an MBurger connection.
+    </div>
+    
 
-    return {
-        getSection: getSection
-    }
-}
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>api_key</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">MBurger project API Key.</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="mburger.js.html" class="button">View Source</a>
+            <span>
+                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line23">line 23</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">MBurgerInstance</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>// Import MBurger SDKconst mburger = require('mburger');// Init the connectionconst instance = mburger.createClient('a1b2c3d4');</code></pre>
+    
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

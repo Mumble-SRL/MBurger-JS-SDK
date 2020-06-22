@@ -76,7 +76,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="getSection.html">getSection</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="createClient.html">createClient</a></li><li><a href="MBurgerInstance-getSection.html">getSection</a></li></ul></div>
                 
             </nav>
         </div>
@@ -492,7 +492,7 @@
         <p class="tag-source">
             <a href="mburger.js.html" class="button">View Source</a>
             <span>
-                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line32">line 32</a>
+                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line60">line 60</a>
             </span>
         </p>
     
@@ -523,8 +523,6 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>Returns a { key: value } object with the field name as key.</div>
-    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
@@ -541,6 +539,13 @@
     </div>
 
 
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>// Import MBurger SDKconst mburger = require('mburger');// Init the connectionconst instance = mburger.createClient('a1b2c3d4');// Retrieve data from the section 1234let data = instance.getSection(1234);console.log(data);</code></pre>
+    
 
 
 
