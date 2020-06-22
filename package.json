@@ -1,6 +1,6 @@
 {
   "name": "mburger",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "mburger.js",
   "scripts": {
@@ -16,14 +16,13 @@
   "author": "Mumble SRL <info@mumbleideas.it> (https://mumbleideas.it)",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.2",
-    "jsdoc-template": "^1.2.0"
+    "axios": "^0.19.2"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Mumble-SRL/MBurger-JS-SDK.git"
   },
   "devDependencies": {
-    "better-docs": "^2.0.1"
+    "jsdoc-template": "^1.2.0"
   }
 }
