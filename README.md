@@ -22,9 +22,16 @@ There is no need for configurations after installing the SDK.
 
 In the current version of our JS SDK you can find only a few methods that you can implement in your code but they're so powerful that enable you to do pretty anything with MBurger CMS.
 
+### 3.1 - Initiate the connection
+
+Init the connection to MBurger with your API Key.
+
+     const instance = mburger.createClient('a1b2c3d4');
+
+
 ### 3.2 - Retrieve a single Section
 
-> getSection($secton_id, $original_media = 0, $params = [], $filters = [], $order_asc = 1, $cache_seconds = 0, $use_slug = 0)
+    getSection($secton_id, $original_media = 0, $params = [], $filters = [], $order_asc = 1, $cache_seconds = 0, $use_slug = 0)
 
 | Specification | Data Type | Description |
 |---|---|---|
@@ -33,7 +40,7 @@ In the current version of our JS SDK you can find only a few methods that you ca
 | cache_seconds | Integer | Number of seconds you want to keep the API response stored in your local cache |
 | use_slug | Boolean | Declare if you want to use the section slug instead of the ID to retrieve data |
 
-#### Example Snippet
+#### Sample code
 
      // Import MBurger SDK
      const mburger = require('mburger');
