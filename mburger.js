@@ -57,7 +57,7 @@ export function MBurgerInstance(axiosInstance) {
      * let data = instance.getSection(1234);
      * console.log(data);
      */
-    function getSection(section_id, original_media = false, params = {}, filters = {}, order_asc = true, cache_seconds = false, use_slug = false) {
+    async function getSection(section_id, original_media = false, params = {}, filters = {}, order_asc = true, cache_seconds = false, use_slug = false) {
         let path = 'sections/' + section_id + '/elements';
 
         let query = {
@@ -70,26 +70,26 @@ export function MBurgerInstance(axiosInstance) {
             }
         };
 
+        return new Promise((resolve) => {
+            axiosInstance.get(host + path,
+                {
+                    params: params,
+                    headers: headers
+                })
+                .then((response) => {
+                    let items = response.data.body.items;
+                    for (let key in items) {
+                        items[key] = items[key].value;
+                    }
 
-        // AXIOS GET Call to MBurger
-        axiosInstance.get(host + path, {
-            params: params,
-            headers: headers
+                    resolve(items);
+                }, (error) => {
+                    console.log("Error: ", error);
+                });
         })
-            .then(function (response) {
-                console.log(response);
-                return response;
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
-
     }
 
     return {
-        getSection: getSection
+        getSection: getSection,
     }
 }
