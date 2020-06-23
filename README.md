@@ -30,8 +30,6 @@ In the current version of our JS SDK you can find only a few methods that you ca
 |---|---|---|
 | section_id | Integer | ID of the requested Section |
 | original_media | Boolean | Indicate if you want the original media or the converted ones |
-| params | Array | Array with the parameters you want to pass to the MBurger params variable. Check our API Reference for more informations |
-| order_asc | Boolean | Express if you want the data in ascendent or descendent order |
 | cache_seconds | Integer | Number of seconds you want to keep the API response stored in your local cache |
 | use_slug | Boolean | Declare if you want to use the section slug instead of the ID to retrieve data |
 
