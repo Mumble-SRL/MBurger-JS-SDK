@@ -54,8 +54,7 @@ export function MBurgerInstance(axiosInstance) {
      * const instance = mburger.createClient('a1b2c3d4');
      *
      * // Retrieve data from the section 1234
-     * let data = instance.getSection(1234);
-     * console.log(data);
+     * instance.getSection(1234).then(result => console.log(result));
      */
     async function getSection(section_id, original_media = false, params = {}, filters = {}, order_asc = true, cache_seconds = false, use_slug = false) {
         let path = 'sections/' + section_id + '/elements';
@@ -81,6 +80,8 @@ export function MBurgerInstance(axiosInstance) {
                     for (let key in items) {
                         items[key] = items[key].value;
                     }
+
+                    items['id'] = section_id;
 
                     resolve(items);
                 }, (error) => {

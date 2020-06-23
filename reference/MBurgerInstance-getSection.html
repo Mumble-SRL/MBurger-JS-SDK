@@ -95,7 +95,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>getSection<span class="signature">(section_id, original_media<span class="signature-attributes">opt</span>, params<span class="signature-attributes">opt</span>, filters<span class="signature-attributes">opt</span>, order_asc<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>, use_slug<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h2>
+        <h2><span class="attribs"><span class="type-signature">(async) </span></span>getSection<span class="signature">(section_id, original_media<span class="signature-attributes">opt</span>, params<span class="signature-attributes">opt</span>, filters<span class="signature-attributes">opt</span>, order_asc<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>, use_slug<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h2>
         
     
 </header>
@@ -116,6 +116,10 @@
     
     <h4 class="name" id="getSection">
         <a class="href-link" href="#getSection">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
         
         <span class="code-name">
             
@@ -492,7 +496,7 @@
         <p class="tag-source">
             <a href="mburger.js.html" class="button">View Source</a>
             <span>
-                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line60">line 60</a>
+                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line59">line 59</a>
             </span>
         </p>
     
@@ -544,7 +548,7 @@
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>// Import MBurger SDKconst mburger = require('mburger');// Init the connectionconst instance = mburger.createClient('a1b2c3d4');// Retrieve data from the section 1234let data = instance.getSection(1234);console.log(data);</code></pre>
+        <pre class="prettyprint"><code>// Import MBurger SDKconst mburger = require('mburger');// Init the connectionconst instance = mburger.createClient('a1b2c3d4');// Retrieve data from the section 1234instance.getSection(1234).then(result => console.log(result));</code></pre>
     
 
 
