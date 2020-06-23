@@ -68,7 +68,7 @@ export function MBurgerInstance(axiosInstance) {
         return new Promise((resolve) => {
             axiosInstance.get(host + path,
                 {
-                    params: params,
+                    params: query,
                     headers: headers
                 })
                 .then((response) => {
@@ -86,7 +86,70 @@ export function MBurgerInstance(axiosInstance) {
         })
     }
 
+    /**
+     * Retrieve a single block.
+     *
+     * @constructor
+     * @param {integer} block_id - ID of the requested Block.
+     * @param {boolean} [original_media=false] - Indicate if you want the original media or the converted ones
+     * @param {object} [params={}] - The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.
+     * @param {boolean} [order_asc=true] - Express if you want the data in ascendent or descendent order.
+     * @param {integer} [cache_seconds=0] - Number of seconds you want to keep the API response stored in your local cache.
+     * @returns {object}
+     * @example
+     * // Import MBurger SDK
+     * const mburger = require('mburger');
+     *
+     * // Init the connection
+     * const instance = mburger.createClient('a1b2c3d4');
+     *
+     * // Retrieve data from the block 123
+     * instance.getBlock(123).then(result => console.log(result));
+     *
+     */
+    async function getBlock(block_id, original_media = false, params = {}, order_asc = true, cache_seconds = false) {
+        let path = 'blocks/' + block_id + '/sections';
+
+        let query = {
+            ...params,
+            ...{
+                include: 'elements',
+                sort: 'order',
+                force_locale_fallback: true,
+                locale: 'it',
+                original_media: original_media
+            }
+        };
+
+        if (!order_asc) {
+            query['sort'] = '-order';
+        }
+
+        return new Promise((resolve) => {
+            axiosInstance.get(host + path,
+                {
+                    params: query,
+                    headers: headers
+                })
+                .then((response) => {
+                    let items = response.data.body.items.map(value => {
+                        let section = value.elements;
+                        for (let key in section) {
+                            section[key] = section[key].value;
+                        }
+
+                        return section;
+                    });
+
+                    resolve(items);
+                }, (error) => {
+                    console.log("Error: ", error);
+                });
+        })
+    }
+
     return {
         getSection: getSection,
+        getBlock: getBlock
     }
 }
