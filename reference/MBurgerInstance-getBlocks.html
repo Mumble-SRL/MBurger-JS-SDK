@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> getSection</title>
+  <title> getBlocks</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -84,7 +84,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Class</p>
-                    <h1>getSection</h1>
+                    <h1>getBlocks</h1>
                 </header>
                 
 
@@ -95,7 +95,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature">(async) </span></span>getSection<span class="signature">(section_id, original_media<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>, use_slug<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h2>
+        <h2><span class="attribs"><span class="type-signature">(async) </span></span>getBlocks<span class="signature">(block_ids, original_media<span class="signature-attributes">opt</span>, params<span class="signature-attributes">opt</span>, order_asc<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h2>
         
     
 </header>
@@ -114,8 +114,8 @@
 
 
     
-    <h4 class="name" id="getSection">
-        <a class="href-link" href="#getSection">#</a>
+    <h4 class="name" id="getBlocks">
+        <a class="href-link" href="#getBlocks">#</a>
         
             
                 <span class='tag'>async</span>
@@ -123,7 +123,7 @@
         
         <span class="code-name">
             
-                new getSection<span class="signature">(section_id, original_media<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>, use_slug<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span>
+                new getBlocks<span class="signature">(block_ids, original_media<span class="signature-attributes">opt</span>, params<span class="signature-attributes">opt</span>, order_asc<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span>
             
         </span>
     </h4>
@@ -132,7 +132,7 @@
     
     
     <div class="description">
-        Retrieve a single section.
+        Retrieve multiple blocks.
     </div>
     
 
@@ -174,13 +174,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>section_id</code></td>
+      <td class="name"><code>block_ids</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">integer</span>
+<span class="param-type">array</span>
 
 
   
@@ -202,7 +202,7 @@
       </td>
   
 
-  <td class="description last">ID of the requested Section from MBurger.</td>
+  <td class="description last">ID of the requested Blocks.</td>
 </tr>
 
 
@@ -243,7 +243,89 @@
       </td>
   
 
-  <td class="description last">Indicate if you want the original media or the converted ones.</td>
+  <td class="description last">Indicate if you want the original media or the converted ones</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          {}
+      
+      </td>
+  
+
+  <td class="description last">The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>order_asc</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          true
+      
+      </td>
+  
+
+  <td class="description last">Express if you want the data in ascendent or descendent order.</td>
 </tr>
 
 
@@ -285,47 +367,6 @@
   
 
   <td class="description last">Number of seconds you want to keep the API response stored in your local cache.</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>use_slug</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">boolean</span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-          false
-      
-      </td>
-  
-
-  <td class="description last">Declare if you want to use the section slug instead of the ID to retrieve data.</td>
 </tr>
 
 
@@ -373,7 +414,7 @@
         <p class="tag-source">
             <a href="mburger.js.html" class="button">View Source</a>
             <span>
-                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line56">line 56</a>
+                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line172">line 172</a>
             </span>
         </p>
     
@@ -425,7 +466,7 @@
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>// Import MBurger SDKconst mburger = require('mburger');// Init the connectionconst instance = mburger.createClient('a1b2c3d4');// Retrieve data from the section 1234instance.getSection(1234).then(result => console.log(result));</code></pre>
+        <pre class="prettyprint"><code>// Import MBurger SDKconst mburger = require('mburger');// Init the connectionconst instance = mburger.createClient('a1b2c3d4');// Retrieve data from the blocks 798 and 799instance.getBlocks([798, 799]).then(result => console.log(result));</code></pre>
     
 
 

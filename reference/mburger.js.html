@@ -78,7 +78,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="createClient.html">createClient</a></li><li><a href="MBurgerInstance-getBlock.html">getBlock</a></li><li><a href="MBurgerInstance-getSection.html">getSection</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="createClient.html">createClient</a></li><li><a href="MBurgerInstance-getBlock.html">getBlock</a></li><li><a href="MBurgerInstance-getBlocks.html">getBlocks</a></li><li><a href="MBurgerInstance-getSection.html">getSection</a></li></ul></div>
                 
             </nav>
         </div>
@@ -245,9 +245,96 @@ export function MBurgerInstance(axiosInstance) {
         })
     }
 
+    /**
+     * Retrieve multiple blocks.
+     *
+     * @constructor
+     * @param {array} block_ids - ID of the requested Blocks.
+     * @param {boolean} [original_media=false] - Indicate if you want the original media or the converted ones
+     * @param {object} [params={}] - The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.
+     * @param {boolean} [order_asc=true] - Express if you want the data in ascendent or descendent order.
+     * @param {integer} [cache_seconds=0] - Number of seconds you want to keep the API response stored in your local cache.
+     * @returns {object}
+     * @example
+     * // Import MBurger SDK
+     * const mburger = require('mburger');
+     *
+     * // Init the connection
+     * const instance = mburger.createClient('a1b2c3d4');
+     *
+     * // Retrieve data from the blocks 798 and 799
+     * instance.getBlocks([798, 799]).then(result => console.log(result));
+     *
+     */
+    async function getBlocks(block_ids, original_media = false, params = {}, filters = {}, order_asc = true, cache_seconds = false) {
+        let path = 'blocks';
+
+        let query = {
+            ...params,
+            ...{
+                include: 'sections.elements',
+                sort: 'order',
+                force_locale_fallback: true,
+                locale: 'it',
+                original_media: original_media,
+            }
+        };
+
+        let filters_query = {
+            ...filters,
+            ...{
+                id: block_ids.join()
+            }
+        };
+
+        for (let key in filters_query) {
+            query['filter[' + key + ']'] = filters_query[key];
+        }
+
+        if (!order_asc) {
+            query['sort'] = '-order';
+        }
+
+        return new Promise((resolve) => {
+            axiosInstance.get(host + path,
+                {
+                    params: query,
+                    headers: headers
+                })
+                .then((response) => {
+                    let blocks = response.data.body.items.map((block, i) => {
+                        return block;
+                    });
+
+                    let sections = blocks.map((value, i) => {
+                        let sections = value.sections;
+
+                        let section = sections.map((value, i) => {
+                            let section = value.elements;
+                            for (let key in section) {
+                                section[key] = section[key].value;
+                            }
+                            return section;
+                        });
+                        return section;
+                    });
+
+                    let out = {};
+                    for (let [i, value] of Object.entries(blocks)) {
+                        out[value.title] = sections[i];
+                    }
+
+                    resolve(out);
+                }, (error) => {
+                    console.log("Error: ", error);
+                });
+        })
+    }
+
     return {
         getSection: getSection,
-        getBlock: getBlock
+        getBlock: getBlock,
+        getBlocks: getBlocks
     }
 }
 </code></pre>
