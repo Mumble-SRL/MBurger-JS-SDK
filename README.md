@@ -31,7 +31,7 @@ Init the connection to MBurger with your API Key.
 
 ### 3.2 - Retrieve a single Section
 
-    getSection($secton_id, $original_media = 0, $params = [], $filters = [], $order_asc = 1, $cache_seconds = 0, $use_slug = 0)
+    async function getSection(section_id, original_media = false, cache_seconds = false, use_slug = false) {
 
 | Specification | Data Type | Description |
 |---|---|---|
@@ -40,16 +40,39 @@ Init the connection to MBurger with your API Key.
 | cache_seconds | Integer | Number of seconds you want to keep the API response stored in your local cache |
 | use_slug | Boolean | Declare if you want to use the section slug instead of the ID to retrieve data |
 
-#### Sample code
+#### 3.2.1 - Sample code
 
      // Import MBurger SDK
      const mburger = require('mburger');
      
      // Init the connection
-     const instance = mburger.createClient('a1b2c3d4');
+     const instance = mburger.createClient('a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4');
      
      // Retrieve data from the section 1234
      instance.getSection(1234).then(result => console.log(result));
+
+### 3.3 - Retrieve a single Block
+
+    async function getBlock(block_id, original_media = false, params = {}, order_asc = true, cache_seconds = false) {
+
+| Specification | Data Type | Description |
+|---|---|---|
+| block_id | Integer | ID of the requested Block |
+| original_media | Boolean | Indicate if you want the original media or the converted ones |
+| params | Object | The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations |
+| order_asc | Boolean | Declare if you want the data in ascendent or descendent order |
+| cache_seconds | Integer | Number of seconds you want to keep the API response stored in your local cache |
+
+#### 3.3.1 - Sample code
+
+    // Import MBurger SDK
+    const mburger = require('mburger');
+    
+    // Init the connection
+    let instance = mburger.createClient('a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4');
+    
+    // Retrieve data from the block
+    instance.getBlock(798).then(result => console.log(result));
 
 
 ## 4.0 - Support & Feedback
