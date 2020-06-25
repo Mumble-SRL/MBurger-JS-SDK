@@ -74,6 +74,30 @@ Init the connection to MBurger with your API Key.
     // Retrieve data from the block
     instance.getBlock(798).then(result => console.log(result));
 
+### 3.4 - Retrieve multiple Blocks
+
+    async function getBlocks(block_ids, original_media = false, params = {}, filters = {}, order_asc = true, cache_seconds = false) {
+
+| Specification | Data Type | Description |
+|---|---|---|
+| block_ids | Array | ID of the requested Blocks |
+| original_media | Boolean | Indicate if you want the original media or the converted ones |
+| params | Object | The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations |
+| filters | Object | The filters you want to pass to the MBurger params variable. Check our API Reference for more informations |
+| order_asc | Boolean | Declare if you want the data in ascendent or descendent order |
+| cache_seconds | Integer | Number of seconds you want to keep the API response stored in your local cache |
+
+#### 3.4.1 - Sample code
+
+    // Import MBurger SDK
+    const mburger = require('mburger');
+    
+    // Init the connection
+    let instance = mburger.createClient('a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4');
+    
+    // Retrieve data from the block
+    instance.getBlocks([798, 799]).then(result => console.log(result));
+
 
 ## 4.0 - Support & Feedback
 
