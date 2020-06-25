@@ -6,6 +6,9 @@ const headers = {
     'X-MBurger-Version': 3,
 };
 
+// TODO. Locale ignored
+// TODO. Implement caching
+
 /**
  * Initiate an MBurger connection.
  *
@@ -56,7 +59,6 @@ export function MBurgerInstance(axiosInstance) {
     async function getSection(section_id, original_media = false, cache_seconds = false, use_slug = false) {
         let path = 'sections/' + section_id + '/elements';
 
-        // TODO. Locale ignored
         let query = {
             original_media: original_media,
             locale: 'it',
@@ -64,7 +66,6 @@ export function MBurgerInstance(axiosInstance) {
             use_slug: use_slug
         };
 
-        // TODO. Implement caching
         return new Promise((resolve) => {
             axiosInstance.get(host + path,
                 {
