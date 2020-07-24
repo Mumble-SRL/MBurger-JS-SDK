@@ -4,7 +4,7 @@ This package provides a simple interface between your Laravel Project and the MB
 
 ## 1.0 - Installation
 
-This package can be installed via Composer:
+This package can be installed via the most common Javascript package managers:
 
 ### 1.1 - NPM 
 
