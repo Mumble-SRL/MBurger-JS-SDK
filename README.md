@@ -26,7 +26,7 @@ In the current version of our JS SDK you can find only a few methods that you ca
 
 Init the connection to MBurger with your API Key.
 
-     const instance = mburger.createClient('a1b2c3d4');
+     const instance = mburger.createClient('YOUR_MBURGER_API_KEY');
 
 
 ### 3.2 - Retrieve a single Section
@@ -46,7 +46,7 @@ Init the connection to MBurger with your API Key.
      const mburger = require('mburger');
      
      // Init the connection
-     const instance = mburger.createClient('a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4');
+     const instance = mburger.createClient('YOUR_MBURGER_API_KEY');
      
      // Retrieve data from the section 1234
      instance.getSection(1234).then(result => console.log(result));
@@ -69,7 +69,7 @@ Init the connection to MBurger with your API Key.
     const mburger = require('mburger');
     
     // Init the connection
-    let instance = mburger.createClient('a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4');
+    let instance = mburger.createClient('YOUR_MBURGER_API_KEY');
     
     // Retrieve data from the block
     instance.getBlock(798).then(result => console.log(result));
@@ -93,7 +93,7 @@ Init the connection to MBurger with your API Key.
     const mburger = require('mburger');
     
     // Init the connection
-    let instance = mburger.createClient('a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4a1b2c3d4');
+    let instance = mburger.createClient('YOUR_MBURGER_API_KEY');
     
     // Retrieve data from the block
     instance.getBlocks([798, 799]).then(result => console.log(result));

@@ -210,6 +210,7 @@ export function MBurgerInstance(axiosInstance) {
                         return block;
                     });
 
+                    let out = {};
                     let sections = blocks.map((value, i) => {
                         let sections = value.sections;
 
@@ -223,9 +224,22 @@ export function MBurgerInstance(axiosInstance) {
                         return section;
                     });
 
-                    let out = {};
+                    let metas = blocks.map((value, i) => {
+                        let meta = {
+                            'id': value.id,
+                            'available_at': value.available_at,
+                            'updated_at': value.updated_at,
+                            'in_evidence': value.in_evidence,
+                            'order': value.order,
+                            'all_locales': value.all_locales
+                        };
+                        return meta;
+                    });
+
                     for (let [i, value] of Object.entries(blocks)) {
-                        out[value.title] = sections[i];
+                        out[value.title] = {};
+                        out[value.title]['data'] = sections[i];
+                        out[value.title]['meta'] = metas[i];
                     }
 
                     resolve(out);
