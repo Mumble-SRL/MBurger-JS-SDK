@@ -20,7 +20,9 @@ const headers = {
  * const mburger = require('mburger');
  *
  * // Init the connection
- * const instance = mburger.createClient('a1b2c3d4');
+ *  const instance = mburger.createClient({
+ *     api_key: '1234567890'
+ *   });
  *
  */
 export function createClient(params) {
@@ -49,7 +51,6 @@ export function MBurgerInstance(axiosInstance) {
      * @param {string} params.locale - Country code of the required locale.
      * @param {boolean} params.original_media=false - Indicate if you want the original media or the converted ones.
      * @param {boolean} params.force_locale_fallback=false - Set the parameters force_locale_fallback as indicated in the documentation.
-     * @param {integer} params.cache_seconds=0 - Number of seconds you want to keep the API response stored in your local cache.
      * @param {boolean} params.use_slug=false - Declare if you want to use the section slug instead of the ID to retrieve data.
      * @returns {object}
      * @example
@@ -123,7 +124,6 @@ export function MBurgerInstance(axiosInstance) {
      * @param {boolean} params.original_media=false - Indicate if you want the original media or the converted ones
      * @param {object} params.extra_params={} - The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.
      * @param {boolean} params.order_desc=true - Express if you want the data in ascendent or descendent order.
-     * @param {integer} params.cache_seconds=0 - Number of seconds you want to keep the API response stored in your local cache.
      * @param {boolean} params.force_locale_fallback=false - Set the parameters force_locale_fallback as indicated in the documentation.
      * @returns {object}
      * @example
@@ -131,10 +131,15 @@ export function MBurgerInstance(axiosInstance) {
      * const mburger = require('mburger');
      *
      * // Init the connection
-     * const instance = mburger.createClient('a1b2c3d4');
-     *
-     * // Retrieve data from the block 123
-     * instance.getBlock(123).then(result => console.log(result));
+     * const instance = mburger.createClient({
+     *   api_key: '1234567890'
+     * });
+     * // Retrieve data from the block
+     * instance.getBlock({
+     *       section_id: 183,
+     *       locale: 'it',
+     *       original_media: false
+     * }).then(result => console.log(result));
      *
      */
     async function getBlock(params) {
@@ -212,7 +217,6 @@ export function MBurgerInstance(axiosInstance) {
      *
      * @constructor
      * @param {array} params.block_ids - ID of the requested Blocks.
-     * @param {integer} params.cache_seconds=0 - Number of seconds you want to keep the API response stored in your local cache.
      * @param {string} params.locale - Country code of the required locale.
      * @returns {object}
      * @example
