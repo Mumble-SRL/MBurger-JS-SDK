@@ -51,17 +51,7 @@
                 >
                     API Documentation
                 </a>
-                <div class="dropdown is-hoverable is-right">
-                    <a class="dropdown-trigger link">
-                        Tutorials
-                        <i class="fas fa-chevron-down fa-xs"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-content">
-                        
-                        </div>
-                    </div>
-                </div>
+                
                 
                 
             </div>
@@ -95,7 +85,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature">(async) </span></span>getSection<span class="signature">(section_id, original_media<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>, use_slug<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h2>
+        <h2><span class="attribs"><span class="type-signature">(async) </span></span>getSection<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h2>
         
     
 </header>
@@ -123,7 +113,7 @@
         
         <span class="code-name">
             
-                new getSection<span class="signature">(section_id, original_media<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>, use_slug<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span>
+                new getSection<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span>
             
         </span>
     </h4>
@@ -157,8 +147,6 @@
             <th>Type</th>
 
             
-            <th>Attributes</th>
-            
 
             
             <th>Default</th>
@@ -174,7 +162,7 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>section_id</code></td>
+      <td class="name"><code>params.section_id</code></td>
   
 
   <td class="type">
@@ -186,14 +174,6 @@
   
   </td>
 
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
   
 
   
@@ -211,7 +191,36 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>original_media</code></td>
+      <td class="name"><code>params.locale</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Country code of the required locale.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params.original_media</code></td>
   
 
   <td class="type">
@@ -223,16 +232,6 @@
   
   </td>
 
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
   
 
   
@@ -252,7 +251,38 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>cache_seconds</code></td>
+      <td class="name"><code>params.force_locale_fallback</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last">Set the parameters force_locale_fallback as indicated in the documentation.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params.cache_seconds</code></td>
   
 
   <td class="type">
@@ -264,16 +294,6 @@
   
   </td>
 
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
   
 
   
@@ -293,7 +313,7 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>use_slug</code></td>
+      <td class="name"><code>params.use_slug</code></td>
   
 
   <td class="type">
@@ -305,16 +325,6 @@
   
   </td>
 
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
   
 
   
@@ -373,7 +383,7 @@
         <p class="tag-source">
             <a href="mburger.js.html" class="button">View Source</a>
             <span>
-                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line56">line 56</a>
+                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line71">line 71</a>
             </span>
         </p>
     
@@ -425,7 +435,20 @@
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>// Import MBurger SDKconst mburger = require('mburger');// Init the connectionconst instance = mburger.createClient('a1b2c3d4');// Retrieve data from the section 1234instance.getSection(1234).then(result => console.log(result));</code></pre>
+        <pre class="prettyprint"><code>// Import MBurger SDK
+const mburger = require('mburger');
+
+// Init the connection
+  const instance = mburger.createClient({
+      api_key: '1234567890'
+  });
+
+// Retrieve data from the section 10088
+   instance.getSection({
+      section_id: 10088,
+      locale: 'it',
+      force_locale_fallback: false
+  }).then(result => console.log(result));</code></pre>
     
 
 
@@ -467,7 +490,7 @@
             
             <footer class="footer">
                 <div class="content has-text-centered">
-                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a></p>
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
                     <p class="sidebar-created-by">
                         <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
                         <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

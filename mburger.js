@@ -13,7 +13,7 @@ const headers = {
  * Initiate an MBurger connection.
  *
  * @constructor
- * @param {string} api_key - MBurger project API Key.
+ * @param {string} params.api_key - MBurger project API Key.
  * @returns {MBurgerInstance}
  * @example
  * // Import MBurger SDK
@@ -23,12 +23,16 @@ const headers = {
  * const instance = mburger.createClient('a1b2c3d4');
  *
  */
-export function createClient(api_key) {
+export function createClient(params) {
+    if (!params.api_key) {
+        throw new TypeError('You have to initialize the Client with an API Key. Visit support.mburger.cloud for more informations');
+    }
+
     return MBurgerInstance(
         axios.create({
             baseURL: host,
             headers: {
-                ...{'X-MBurger-Token': api_key},
+                ... { 'X-MBurger-Token': params.api_key },
                 ...headers
             }
         })
@@ -41,34 +45,56 @@ export function MBurgerInstance(axiosInstance) {
      * Retrieve a single section.
      *
      * @constructor
-     * @param {integer} section_id - ID of the requested Section from MBurger.
-     * @param {boolean} [original_media=false] - Indicate if you want the original media or the converted ones.
-     * @param {integer} [cache_seconds=0] - Number of seconds you want to keep the API response stored in your local cache.
-     * @param {boolean} [use_slug=false] - Declare if you want to use the section slug instead of the ID to retrieve data.
+     * @param {integer} params.section_id - ID of the requested Section from MBurger.
+     * @param {string} params.locale - Country code of the required locale.
+     * @param {boolean} params.original_media=false - Indicate if you want the original media or the converted ones.
+     * @param {boolean} params.force_locale_fallback=false - Set the parameters force_locale_fallback as indicated in the documentation.
+     * @param {integer} params.cache_seconds=0 - Number of seconds you want to keep the API response stored in your local cache.
+     * @param {boolean} params.use_slug=false - Declare if you want to use the section slug instead of the ID to retrieve data.
      * @returns {object}
      * @example
      * // Import MBurger SDK
      * const mburger = require('mburger');
      *
      * // Init the connection
-     * const instance = mburger.createClient('a1b2c3d4');
+     *   const instance = mburger.createClient({
+     *       api_key: '1234567890'
+     *   });
      *
-     * // Retrieve data from the section 1234
-     * instance.getSection(1234).then(result => console.log(result));
+     * // Retrieve data from the section 10088
+     *    instance.getSection({
+     *       section_id: 10088,
+     *       locale: 'it',
+     *       force_locale_fallback: false
+     *   }).then(result => console.log(result));
      */
-    async function getSection(section_id, original_media = false, cache_seconds = false, use_slug = false) {
-        let path = 'sections/' + section_id + '/elements';
+    async function getSection(params) {
+        if (!params.section_id) {
+            throw new TypeError('You have to speficy a section_id. Visit support.mburger.cloud for more informations');
+        }
 
-        let query = {
-            original_media: original_media,
-            locale: 'it',
-            force_locale_fallback: true,
-            use_slug: use_slug
-        };
+        let path = 'sections/' + params.section_id + '/elements';
+
+        let query = {};
+
+        if (params.locale) {
+            query.locale = params.locale;
+        }
+
+        if (params.original_media) {
+            query.original_media = params.original_media;
+        }
+
+        if (params.force_locale_fallback) {
+            query.force_locale_fallback = params.force_locale_fallback;
+        }
+
+        if (params.use_slug) {
+            query.use_slug = params.use_slug;
+        }
 
         return new Promise((resolve) => {
-            axiosInstance.get(host + path,
-                {
+            axiosInstance.get(host + path, {
                     params: query,
                     headers: headers
                 })
@@ -78,11 +104,12 @@ export function MBurgerInstance(axiosInstance) {
                         items[key] = items[key].value;
                     }
 
-                    items['id'] = section_id;
+                    items['id'] = params.section_id;
 
                     resolve(items);
                 }, (error) => {
-                    console.log("Error: ", error);
+                    console.log(error);
+                    throw new TypeError('Error #1 while executing Promise of getSection.');
                 });
         })
     }
@@ -91,11 +118,13 @@ export function MBurgerInstance(axiosInstance) {
      * Retrieve a single block.
      *
      * @constructor
-     * @param {integer} block_id - ID of the requested Block.
-     * @param {boolean} [original_media=false] - Indicate if you want the original media or the converted ones
-     * @param {object} [params={}] - The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.
-     * @param {boolean} [order_asc=true] - Express if you want the data in ascendent or descendent order.
-     * @param {integer} [cache_seconds=0] - Number of seconds you want to keep the API response stored in your local cache.
+     * @param {integer} params.block_id - ID of the requested Block.
+     * @param {string} params.locale - Country code of the required locale.
+     * @param {boolean} params.original_media=false - Indicate if you want the original media or the converted ones
+     * @param {object} params.extra_params={} - The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.
+     * @param {boolean} params.order_desc=true - Express if you want the data in ascendent or descendent order.
+     * @param {integer} params.cache_seconds=0 - Number of seconds you want to keep the API response stored in your local cache.
+     * @param {boolean} params.force_locale_fallback=false - Set the parameters force_locale_fallback as indicated in the documentation.
      * @returns {object}
      * @example
      * // Import MBurger SDK
@@ -108,43 +137,72 @@ export function MBurgerInstance(axiosInstance) {
      * instance.getBlock(123).then(result => console.log(result));
      *
      */
-    async function getBlock(block_id, original_media = false, params = {}, order_asc = true, cache_seconds = false) {
-        let path = 'blocks/' + block_id + '/sections';
+    async function getBlock(params) {
+
+        if (!params.block_id) {
+            throw new TypeError('You have to speficy a block_id. Visit support.mburger.cloud for more informations');
+        }
+
+        let path = 'blocks/' + params.block_id + '/sections';
 
         let query = {
-            ...params,
-            ...{
-                include: 'elements',
-                sort: 'order',
-                force_locale_fallback: true,
-                locale: 'it',
-                original_media: original_media
-            }
+            include: 'elements',
+            sort: 'order',
         };
 
-        if (!order_asc) {
-            query['sort'] = '-order';
+        if (params.force_locale_fallback) {
+            query.force_locale_fallback = params.force_locale_fallback
+        }
+
+        if (params.locale) {
+            query.locale = params.locale
+        }
+
+        if (params.original_media) {
+            query.original_media = params.original_media
+        }
+
+        if (params.order_desc) {
+            query.sort = '-order';
+        }
+
+        if (params.extra_params) {
+            query = {
+                ...query,
+                ...params.extra_params
+            }
         }
 
         return new Promise((resolve) => {
-            axiosInstance.get(host + path,
-                {
+            axiosInstance.get(host + path, {
                     params: query,
                     headers: headers
                 })
                 .then((response) => {
                     let items = response.data.body.items.map(value => {
-                        let section = value.elements;
-                        for (let key in section) {
-                            section[key] = section[key].value;
+                        let section = {};
+                        section.body = {};
+                        section.meta = {}
+
+                        for (let key in value.elements) {
+                            section.body[key] = value.elements[key].value;
                         }
+
+                        section.meta.id = value.id;
+                        section.meta.updated_at = value.updated_at;
+                        section.meta.available_at = value.available_at;
+                        section.meta.order = value.order;
+                        section.meta.in_evidence = value.in_evidence;
+                        section.meta.visible = value.visible;
+                        section.meta.all_locales = value.all_locales;
 
                         return section;
                     });
 
                     resolve(items);
                 }, (error) => {
-                    console.log("Error: ", error);
+                    console.log(error);
+                    throw new TypeError('Error #2 while executing Promise of getBlock.');
                 });
         })
     }
@@ -153,41 +211,46 @@ export function MBurgerInstance(axiosInstance) {
      * Retrieve multiple blocks.
      *
      * @constructor
-     * @param {array} block_ids - ID of the requested Blocks.
-     * @param {boolean} [original_media=false] - Indicate if you want the original media or the converted ones
-     * @param {object} [params={}] - The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.
-     * @param {boolean} [order_asc=true] - Express if you want the data in ascendent or descendent order.
-     * @param {integer} [cache_seconds=0] - Number of seconds you want to keep the API response stored in your local cache.
+     * @param {array} params.block_ids - ID of the requested Blocks.
+     * @param {integer} params.cache_seconds=0 - Number of seconds you want to keep the API response stored in your local cache.
+     * @param {string} params.locale - Country code of the required locale.
      * @returns {object}
      * @example
-     * // Import MBurger SDK
-     * const mburger = require('mburger');
+     *   // Import MBurger SDK
+     *   const mburger = require('mburger');
      *
-     * // Init the connection
-     * const instance = mburger.createClient('a1b2c3d4');
+     *   // Init the connection
+     *   const instance = mburger.createClient({
+     *       api_key: '123457890'
+     *   });
      *
-     * // Retrieve data from the blocks 798 and 799
-     * instance.getBlocks([798, 799]).then(result => console.log(result));
+     *  // Retrieve data from the blocks 798 and 799
+     *  instance.getBlocks({
+     *       block_ids: [798, 799],
+     *       locale: 'it'
+     *   }).then(result => console.log(result));
      *
      */
-    async function getBlocks(block_ids, original_media = false, params = {}, filters = {}, order_asc = true, cache_seconds = false) {
+    async function getBlocks(params) {
+
         let path = 'blocks';
 
+        if (!params.block_ids) {
+            throw new TypeError('You have to speficy the block_ids value (array). Visit support.mburger.cloud for more informations');
+        }
+
         let query = {
-            ...params,
-            ...{
-                include: 'sections.elements',
-                sort: 'order',
-                force_locale_fallback: true,
-                locale: 'it',
-                original_media: original_media,
-            }
+            include: 'sections.elements',
+            sort: 'order',
         };
 
+        if (params.locale) {
+            query.locale = params.locale
+        }
+
         let filters_query = {
-            ...filters,
-            ...{
-                id: block_ids.join()
+            ... {
+                id: params.block_ids.join()
             }
         };
 
@@ -195,13 +258,8 @@ export function MBurgerInstance(axiosInstance) {
             query['filter[' + key + ']'] = filters_query[key];
         }
 
-        if (!order_asc) {
-            query['sort'] = '-order';
-        }
-
         return new Promise((resolve) => {
-            axiosInstance.get(host + path,
-                {
+            axiosInstance.get(host + path, {
                     params: query,
                     headers: headers
                 })
@@ -214,18 +272,31 @@ export function MBurgerInstance(axiosInstance) {
                     let sections = blocks.map((value, i) => {
                         let sections = value.sections;
 
-                        let section = sections.map((value, i) => {
-                            let section = value.elements;
-                            for (let key in section) {
-                                section[key] = section[key].value;
+                        return sections.map((value, i) => {
+                            let item = {};
+                            item.body = {};
+                            item.meta = {};
+
+                            for (let key in value.elements) {
+                                item.body[key] = value.elements[key].value;
                             }
-                            return section;
+
+                            item.meta = {
+                                all_locales: value.all_locales,
+                                available_at: value.available_at,
+                                id: value.id,
+                                in_evidence: value.in_evidence,
+                                order: value.order,
+                                updated_at: value.updated_at,
+                                visible: value.visible,
+                            }
+
+                            return item;
                         });
-                        return section;
                     });
 
                     let metas = blocks.map((value, i) => {
-                        let meta = {
+                        return {
                             'id': value.id,
                             'available_at': value.available_at,
                             'updated_at': value.updated_at,
@@ -233,18 +304,18 @@ export function MBurgerInstance(axiosInstance) {
                             'order': value.order,
                             'all_locales': value.all_locales
                         };
-                        return meta;
                     });
 
                     for (let [i, value] of Object.entries(blocks)) {
                         out[value.title] = {};
-                        out[value.title]['data'] = sections[i];
+                        out[value.title]['body'] = sections[i];
                         out[value.title]['meta'] = metas[i];
                     }
 
                     resolve(out);
                 }, (error) => {
-                    console.log("Error: ", error);
+                    console.log(error);
+                    throw new TypeError('Error #3 while executing Promise of getBlocks.');
                 });
         })
     }
