@@ -53,7 +53,7 @@ Init the connection to MBurger with your API Key.
 
     // Get a specific block
     instance.getSection({
-        section_id: 183,
+        section_id: 10088,
         locale: 'it',
         original_media: false
     }).then(result => console.log(result));
@@ -79,9 +79,9 @@ Init the connection to MBurger with your API Key.
         api_key: '1234567890'
     });
 
-    // Get a specific block
+    // Retrieve a specific block
     instance.getBlock({
-        block_id: 183,
+        block_id: 884,
         locale: 'it',
         original_media: false
     }).then(result => console.log(result));

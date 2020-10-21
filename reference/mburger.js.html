@@ -1,13 +1,100 @@
-/*
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> mburger.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="createClient.html">createClient</a></li><li><a href="MBurgerInstance-getBlock.html">getBlock</a></li><li><a href="MBurgerInstance-getBlocks.html">getBlocks</a></li><li><a href="MBurgerInstance-getSection.html">getSection</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>mburger.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
  *  __  __ ___                            _ ___   ___ ___  _  __
  * |  \/  | _ )_  _ _ _ __ _ ___ _ _   _ | / __| / __|   \| |/ /
- * | |\/| | _ \ || | '_/ _` / -_) '_| | || \__ \ \__ \ |) | ' <
+ * | |\/| | _ \ || | '_/ _` / -_) '_| | || \__ \ \__ \ |) | ' &lt;
  * |_|  |_|___/\_,_|_| \__, \___|_|    \__/|___/ |___/___/|_|\_\
  *                     |___/
  *
  * Repo:     https://github.com/Mumble-SRL/MBurger-JS-SDK
- * Credits:  Mumble <https://mumbleideas.it>
- * Platform: MBurger <https://mburger.cloud>
+ * Credits:  Mumble &lt;https://mumbleideas.it>
+ * Platform: MBurger &lt;https://mburger.cloud>
  *
  */
 
@@ -88,11 +175,9 @@ export function MBurgerInstance(axiosInstance) {
             throw new TypeError('You have to speficy a section_id. Visit support.mburger.cloud for more informations');
         }
 
-        let path = 'sections/' + params.section_id;
+        let path = 'sections/' + params.section_id + '/elements';
 
-        let query = {
-            'include': 'elements'
-        };
+        let query = {};
 
         if (params.locale) {
             query.locale = params.locale;
@@ -116,8 +201,7 @@ export function MBurgerInstance(axiosInstance) {
                     headers: headers
                 })
                 .then((response) => {
-                    console.log(response);
-                    let items = response.data.body.elements;
+                    let items = response.data.body.items;
                     for (let key in items) {
                         items[key] = items[key].value;
                     }
@@ -347,4 +431,32 @@ export function MBurgerInstance(axiosInstance) {
         getBlock: getBlock,
         getBlocks: getBlocks
     }
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
