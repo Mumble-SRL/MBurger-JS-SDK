@@ -175,9 +175,11 @@ export function MBurgerInstance(axiosInstance) {
             throw new TypeError('You have to speficy a section_id. Visit support.mburger.cloud for more informations');
         }
 
-        let path = 'sections/' + params.section_id + '/elements';
+        let path = 'sections/' + params.section_id;
 
-        let query = {};
+        let query = {
+            'include': 'elements'
+        };
 
         if (params.locale) {
             query.locale = params.locale;
@@ -201,7 +203,8 @@ export function MBurgerInstance(axiosInstance) {
                     headers: headers
                 })
                 .then((response) => {
-                    let items = response.data.body.items;
+                    console.log(response);
+                    let items = response.data.body.elements;
                     for (let key in items) {
                         items[key] = items[key].value;
                     }
