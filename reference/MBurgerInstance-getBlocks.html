@@ -51,17 +51,7 @@
                 >
                     API Documentation
                 </a>
-                <div class="dropdown is-hoverable is-right">
-                    <a class="dropdown-trigger link">
-                        Tutorials
-                        <i class="fas fa-chevron-down fa-xs"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-content">
-                        
-                        </div>
-                    </div>
-                </div>
+                
                 
                 
             </div>
@@ -95,7 +85,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature">(async) </span></span>getBlocks<span class="signature">(block_ids, original_media<span class="signature-attributes">opt</span>, params<span class="signature-attributes">opt</span>, order_asc<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h2>
+        <h2><span class="attribs"><span class="type-signature">(async) </span></span>getBlocks<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h2>
         
     
 </header>
@@ -123,7 +113,7 @@
         
         <span class="code-name">
             
-                new getBlocks<span class="signature">(block_ids, original_media<span class="signature-attributes">opt</span>, params<span class="signature-attributes">opt</span>, order_asc<span class="signature-attributes">opt</span>, cache_seconds<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span>
+                new getBlocks<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span>
             
         </span>
     </h4>
@@ -157,11 +147,7 @@
             <th>Type</th>
 
             
-            <th>Attributes</th>
-            
 
-            
-            <th>Default</th>
             
 
             <th class="last">Description</th>
@@ -174,7 +160,7 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>block_ids</code></td>
+      <td class="name"><code>params.block_ids</code></td>
   
 
   <td class="type">
@@ -187,19 +173,7 @@
   </td>
 
   
-      <td class="attributes">
-      
 
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
   
 
   <td class="description last">ID of the requested Blocks.</td>
@@ -211,162 +185,23 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>original_media</code></td>
+      <td class="name"><code>params.locale</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">boolean</span>
+<span class="param-type">string</span>
 
 
   
   </td>
 
   
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
 
   
-      <td class="default">
-      
-          false
-      
-      </td>
-  
 
-  <td class="description last">Indicate if you want the original media or the converted ones</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">object</span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-          {}
-      
-      </td>
-  
-
-  <td class="description last">The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>order_asc</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">boolean</span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-          true
-      
-      </td>
-  
-
-  <td class="description last">Express if you want the data in ascendent or descendent order.</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>cache_seconds</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">integer</span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-          0
-      
-      </td>
-  
-
-  <td class="description last">Number of seconds you want to keep the API response stored in your local cache.</td>
+  <td class="description last">Country code of the required locale.</td>
 </tr>
 
 
@@ -414,7 +249,7 @@
         <p class="tag-source">
             <a href="mburger.js.html" class="button">View Source</a>
             <span>
-                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line172">line 172</a>
+                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line253">line 253</a>
             </span>
         </p>
     
@@ -466,7 +301,19 @@
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>// Import MBurger SDKconst mburger = require('mburger');// Init the connectionconst instance = mburger.createClient('a1b2c3d4');// Retrieve data from the blocks 798 and 799instance.getBlocks([798, 799]).then(result => console.log(result));</code></pre>
+        <pre class="prettyprint"><code>// Import MBurger SDK
+  const mburger = require('mburger');
+
+  // Init the connection
+  const instance = mburger.createClient({
+      api_key: '123457890'
+  });
+
+ // Retrieve data from the blocks 798 and 799
+ instance.getBlocks({
+      block_ids: [798, 799],
+      locale: 'it'
+  }).then(result => console.log(result));</code></pre>
     
 
 
@@ -508,7 +355,7 @@
             
             <footer class="footer">
                 <div class="content has-text-centered">
-                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a></p>
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
                     <p class="sidebar-created-by">
                         <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
                         <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
