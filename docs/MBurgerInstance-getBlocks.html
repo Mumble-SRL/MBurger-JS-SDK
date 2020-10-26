@@ -149,6 +149,8 @@
             
 
             
+            <th>Default</th>
+            
 
             <th class="last">Description</th>
         </tr>
@@ -175,6 +177,10 @@
   
 
   
+      <td class="default">
+      
+      </td>
+  
 
   <td class="description last">ID of the requested Blocks.</td>
 </tr>
@@ -200,8 +206,43 @@
   
 
   
+      <td class="default">
+      
+      </td>
+  
 
   <td class="description last">Country code of the required locale.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params.filter</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          {}
+      
+      </td>
+  
+
+  <td class="description last">Set the filters as indicated in the official documentation.</td>
 </tr>
 
 
@@ -249,7 +290,7 @@
         <p class="tag-source">
             <a href="mburger.js.html" class="button">View Source</a>
             <span>
-                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line256">line 256</a>
+                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line275">line 275</a>
             </span>
         </p>
     
@@ -312,7 +353,10 @@
  // Retrieve data from the blocks 798 and 799
  instance.getBlocks({
       block_ids: [798, 799],
-      locale: 'it'
+      locale: 'it',
+      filter: {
+          'value': 'chiave 1, chiave 2'
+      }
   }).then(result => console.log(result));</code></pre>
     
 

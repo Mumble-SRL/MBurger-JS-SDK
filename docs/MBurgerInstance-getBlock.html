@@ -340,6 +340,37 @@
 
 
         
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params.filter</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          {}
+      
+      </td>
+  
+
+  <td class="description last">Set the filters as indicated in the official documentation.</td>
+</tr>
+
+
+        
         </tbody>
     </table>
 </div>
@@ -383,7 +414,7 @@
         <p class="tag-source">
             <a href="mburger.js.html" class="button">View Source</a>
             <span>
-                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line163">line 163</a>
+                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line167">line 167</a>
             </span>
         </p>
     
@@ -447,7 +478,10 @@ const instance = mburger.createClient({
 instance.getBlock({
       section_id: 884,
       locale: 'it',
-      original_media: false
+      original_media: false,
+      filter: {
+          'value': 'chiave 1, chiave 2'
+      }
 }).then(result => console.log(result));</code></pre>
     
 
