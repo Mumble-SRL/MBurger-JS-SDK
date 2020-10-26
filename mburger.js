@@ -216,7 +216,6 @@ export function MBurgerInstance(axiosInstance) {
                 }
             })
                 .then((response) => {
-                    console.log(response);
                     let items = response.data.body.items.map(value => {
                         let section = {};
                         section.body = {};
