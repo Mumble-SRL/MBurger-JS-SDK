@@ -117,14 +117,23 @@ export function MBurgerInstance(axiosInstance) {
                 headers: headers
             })
                 .then((response) => {
-                    let items = response.data.body.elements;
-                    for (let key in items) {
-                        items[key] = items[key].value;
+                    let section = {};
+                    section.body = {};
+                    section.meta = {}
+
+                    for (let key in response.data.body.elements) {
+                        section.body[key] = response.data.body.elements[key].value;
                     }
 
-                    items['id'] = params.section_id;
+                    section.meta.id = response.data.id;
+                    section.meta.updated_at = response.data.updated_at;
+                    section.meta.available_at = response.data.available_at;
+                    section.meta.order = response.data.order;
+                    section.meta.in_evidence = response.data.in_evidence;
+                    section.meta.visible = response.data.visible;
+                    section.meta.all_locales = response.data.all_locales;
 
-                    resolve(items);
+                    resolve(section);
                 }, (error) => {
                     console.log(error);
                     throw new TypeError('Error #1 while executing Promise of getSection.');
@@ -216,6 +225,7 @@ export function MBurgerInstance(axiosInstance) {
                 }
             })
                 .then((response) => {
+                    console.log(response);
                     let items = response.data.body.items.map(value => {
                         let section = {};
                         section.body = {};
