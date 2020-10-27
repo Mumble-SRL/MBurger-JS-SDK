@@ -124,7 +124,6 @@ export function MBurgerInstance(axiosInstance) {
                         section.body[key] = response.data.body.elements[key].value;
                     }
 
-                    console.log(response);
                     section.meta.id = response.data.body.id;
                     section.meta.updated_at = response.data.body.updated_at;
                     section.meta.available_at = response.data.body.available_at;
