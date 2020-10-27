@@ -21,7 +21,6 @@ const headers = {
     'X-MBurger-Version': 3,
 };
 
-// TODO. Locale ignored
 // TODO. Implement caching
 
 /**
@@ -125,13 +124,14 @@ export function MBurgerInstance(axiosInstance) {
                         section.body[key] = response.data.body.elements[key].value;
                     }
 
-                    section.meta.id = response.data.id;
-                    section.meta.updated_at = response.data.updated_at;
-                    section.meta.available_at = response.data.available_at;
-                    section.meta.order = response.data.order;
-                    section.meta.in_evidence = response.data.in_evidence;
-                    section.meta.visible = response.data.visible;
-                    section.meta.all_locales = response.data.all_locales;
+                    console.log(response);
+                    section.meta.id = response.data.body.id;
+                    section.meta.updated_at = response.data.body.updated_at;
+                    section.meta.available_at = response.data.body.available_at;
+                    section.meta.order = response.data.body.order;
+                    section.meta.in_evidence = response.data.body.in_evidence;
+                    section.meta.visible = response.data.body.visible;
+                    section.meta.all_locales = response.data.body.all_locales;
 
                     resolve(section);
                 }, (error) => {
