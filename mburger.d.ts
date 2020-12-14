@@ -1,6 +1,6 @@
 /**
  *
- * MBurger Types Definitions
+ * MBurger Types Declaration
  *
  */
 
