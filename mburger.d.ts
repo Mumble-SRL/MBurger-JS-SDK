@@ -48,7 +48,7 @@ export interface BaseElementInterface<Value> {
 export interface AddressElementInterface extends BaseElementInterface<AddressValueInterface> {}
 export interface TextElementInterface extends BaseElementInterface<string> {}
 export interface CheckboxElementInterface extends BaseElementInterface<boolean> {}
-export interface DocumentElementInterface extends BaseElementInterface<[DocumentValueInterface]> {}
+export interface DocumentElementInterface extends BaseElementInterface<DocumentValueInterface[]> {}
 export interface ImageElementInterface extends BaseElementInterface<[ImageValueInterface]> {}
 export interface TextAreaElementInterface extends BaseElementInterface<string> {}
 export interface SlugElementInterface extends BaseElementInterface<string> {}
@@ -67,6 +67,6 @@ export interface SectionInterface<Elements> {
 
 // Responses
 export interface ListResponseInterface<Item> {
-  items: [Item];
+  items: Item[];
   meta: ListMetaInterface;
 }
