@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> getSection</title>
+  <title> createClient</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,7 +74,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Class</p>
-                    <h1>getSection</h1>
+                    <h1>createClient</h1>
                 </header>
                 
 
@@ -85,7 +85,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature">(async) </span></span>getSection<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>createClient<span class="signature">()</span><span class="type-signature"> &rarr; {MBurgerInstance}</span></h2>
         
     
 </header>
@@ -104,16 +104,12 @@
 
 
     
-    <h4 class="name" id="getSection">
-        <a class="href-link" href="#getSection">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
+    <h4 class="name" id="createClient">
+        <a class="href-link" href="#createClient">#</a>
         
         <span class="code-name">
             
-                new getSection<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span>
+                new createClient<span class="signature">()</span><span class="type-signature"> &rarr; {MBurgerInstance}</span>
             
         </span>
     </h4>
@@ -122,7 +118,7 @@
     
     
     <div class="description">
-        Retrieve a single section.
+        Initiate an MBurger connection.
     </div>
     
 
@@ -149,8 +145,6 @@
             
 
             
-            <th>Default</th>
-            
 
             <th class="last">Description</th>
         </tr>
@@ -162,36 +156,7 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>params.section_id</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">integer</span>
-
-
-  
-  </td>
-
-  
-
-  
-      <td class="default">
-      
-      </td>
-  
-
-  <td class="description last">ID of the requested Section from MBurger.</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params.locale</code></td>
+      <td class="name"><code>params.api_key</code></td>
   
 
   <td class="type">
@@ -206,105 +171,8 @@
   
 
   
-      <td class="default">
-      
-      </td>
-  
 
-  <td class="description last">Country code of the required locale.</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params.original_media</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">boolean</span>
-
-
-  
-  </td>
-
-  
-
-  
-      <td class="default">
-      
-          false
-      
-      </td>
-  
-
-  <td class="description last">Indicate if you want the original media or the converted ones.</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params.force_locale_fallback</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">boolean</span>
-
-
-  
-  </td>
-
-  
-
-  
-      <td class="default">
-      
-          false
-      
-      </td>
-  
-
-  <td class="description last">Set the parameters force_locale_fallback as indicated in the documentation.</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params.use_slug</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">boolean</span>
-
-
-  
-  </td>
-
-  
-
-  
-      <td class="default">
-      
-          false
-      
-      </td>
-  
-
-  <td class="description last">Declare if you want to use the section slug instead of the ID to retrieve data.</td>
+  <td class="description last">MBurger project API Key.</td>
 </tr>
 
 
@@ -352,7 +220,7 @@
         <p class="tag-source">
             <a href="mburger.js.html" class="button">View Source</a>
             <span>
-                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line86">line 86</a>
+                <a href="mburger.js.html">mburger.js</a>, <a href="mburger.js.html#line43">line 43</a>
             </span>
         </p>
     
@@ -387,7 +255,7 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">object</span>
+<span class="param-type">MBurgerInstance</span>
 
 
     </div>
@@ -408,16 +276,9 @@
 const mburger = require('mburger');
 
 // Init the connection
-  const instance = mburger.createClient({
-      api_key: '1234567890'
-  });
-
-// Retrieve data from the section 10088
-   instance.getSection({
-      section_id: 10088,
-      locale: 'it',
-      force_locale_fallback: false
-  }).then(result => console.log(result));</code></pre>
+ const instance = mburger.createClient({
+    api_key: '1234567890'
+  });</code></pre>
     
 
 

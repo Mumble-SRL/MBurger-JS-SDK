@@ -13,6 +13,7 @@
 
 
 const axios = require('axios');
+const qs = require('qs');
 
 const host = "https://mburger.cloud/api/";
 const headers = {
@@ -20,7 +21,6 @@ const headers = {
     'X-MBurger-Version': 3,
 };
 
-// TODO. Locale ignored
 // TODO. Implement caching
 
 /**
@@ -48,7 +48,7 @@ export function createClient(params) {
         axios.create({
             baseURL: host,
             headers: {
-                ... { 'X-MBurger-Token': params.api_key },
+                ...{'X-MBurger-Token': params.api_key},
                 ...headers
             }
         })
@@ -112,19 +112,27 @@ export function MBurgerInstance(axiosInstance) {
 
         return new Promise((resolve) => {
             axiosInstance.get(host + path, {
-                    params: query,
-                    headers: headers
-                })
+                params: query,
+                headers: headers
+            })
                 .then((response) => {
-                    console.log(response);
-                    let items = response.data.body.elements;
-                    for (let key in items) {
-                        items[key] = items[key].value;
+                    let section = {};
+                    section.body = {};
+                    section.meta = {}
+
+                    for (let key in response.data.body.elements) {
+                        section.body[key] = response.data.body.elements[key].value;
                     }
 
-                    items['id'] = params.section_id;
+                    section.meta.id = response.data.body.id;
+                    section.meta.updated_at = response.data.body.updated_at;
+                    section.meta.available_at = response.data.body.available_at;
+                    section.meta.order = response.data.body.order;
+                    section.meta.in_evidence = response.data.body.in_evidence;
+                    section.meta.visible = response.data.body.visible;
+                    section.meta.all_locales = response.data.body.all_locales;
 
-                    resolve(items);
+                    resolve(section);
                 }, (error) => {
                     console.log(error);
                     throw new TypeError('Error #1 while executing Promise of getSection.');
@@ -142,6 +150,7 @@ export function MBurgerInstance(axiosInstance) {
      * @param {object} params.extra_params={} - The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.
      * @param {boolean} params.order_desc=true - Express if you want the data in ascendent or descendent order.
      * @param {boolean} params.force_locale_fallback=false - Set the parameters force_locale_fallback as indicated in the documentation.
+     * @param {boolean} params.filter={} - Set the filters as indicated in the official documentation.
      * @returns {object}
      * @example
      * // Import MBurger SDK
@@ -156,7 +165,10 @@ export function MBurgerInstance(axiosInstance) {
      * instance.getBlock({
      *       section_id: 884,
      *       locale: 'it',
-     *       original_media: false
+     *       original_media: false,
+     *       filter: {
+     *           'value': 'chiave 1, chiave 2'
+     *       }
      * }).then(result => console.log(result));
      *
      */
@@ -189,6 +201,13 @@ export function MBurgerInstance(axiosInstance) {
             query.sort = '-order';
         }
 
+        if (params.filter) {
+            query.filter = [];
+            for (let [key, value] of Object.entries(params.filter)) {
+                query.filter[key] = value;
+            }
+        }
+
         if (params.extra_params) {
             query = {
                 ...query,
@@ -198,9 +217,12 @@ export function MBurgerInstance(axiosInstance) {
 
         return new Promise((resolve) => {
             axiosInstance.get(host + path, {
-                    params: query,
-                    headers: headers
-                })
+                params: query,
+                headers: headers,
+                paramsSerializer: params => {
+                    return qs.stringify(params)
+                }
+            })
                 .then((response) => {
                     let items = response.data.body.items.map(value => {
                         let section = {};
@@ -236,6 +258,7 @@ export function MBurgerInstance(axiosInstance) {
      * @constructor
      * @param {array} params.block_ids - ID of the requested Blocks.
      * @param {string} params.locale - Country code of the required locale.
+     * @param {boolean} params.filter={} - Set the filters as indicated in the official documentation.
      * @returns {object}
      * @example
      *   // Import MBurger SDK
@@ -249,7 +272,10 @@ export function MBurgerInstance(axiosInstance) {
      *  // Retrieve data from the blocks 798 and 799
      *  instance.getBlocks({
      *       block_ids: [798, 799],
-     *       locale: 'it'
+     *       locale: 'it',
+     *       filter: {
+     *           'value': 'chiave 1, chiave 2'
+     *       }
      *   }).then(result => console.log(result));
      *
      */
@@ -270,21 +296,27 @@ export function MBurgerInstance(axiosInstance) {
             query.locale = params.locale
         }
 
-        let filters_query = {
-            ... {
-                id: params.block_ids.join()
+        if (params.filter) {
+            query.filter = [];
+            for (let [key, value] of Object.entries(params.filter)) {
+                query.filter[key] = value;
             }
-        };
-
-        for (let key in filters_query) {
-            query['filter[' + key + ']'] = filters_query[key];
         }
+
+        if (!query.filter) {
+            query.filter = [];
+        }
+
+        query.filter['id'] = params.block_ids.join();
 
         return new Promise((resolve) => {
             axiosInstance.get(host + path, {
-                    params: query,
-                    headers: headers
-                })
+                params: query,
+                headers: headers,
+                paramsSerializer: params => {
+                    return qs.stringify(params)
+                }
+            })
                 .then((response) => {
                     let blocks = response.data.body.items.map((block, i) => {
                         return block;
