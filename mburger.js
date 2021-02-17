@@ -58,6 +58,62 @@ export function createClient(params) {
 
 export function MBurgerInstance(axiosInstance) {
   /**
+   * Retrieve the project.
+   *
+   * @constructor
+   * @param {string} params.locale - Country code of the required locale.
+   * @param {Array} params.include=[] - Specify which relations to load and include in response.
+   * @returns {object}
+   * @example
+   * // Import MBurger SDK
+   * const mburger = require('mburger');
+   *
+   * // Init the connection
+   * const instance = mburger.createClient({
+   *   api_key: '1234567890'
+   * });
+   *
+   * // Retrieve a specific block
+   * instance.getProject({
+   *       locale: 'it',
+   *       include: ['contracts'],
+   * }).then(result => console.log(result));
+   *
+   */
+  async function getProject(params) {
+
+    let path = 'project';
+
+    let query = {}
+
+    if(params) {
+      if (params.locale) {
+        query.locale = params.locale
+      }
+
+      if (params.include) {
+        query.include = params.include
+      }
+    } else query = null
+
+    return new Promise((resolve) => {
+      axiosInstance.get(host + path, {
+        params: query,
+        headers: headers,
+        paramsSerializer: params => {
+          return qs.stringify(params)
+        }
+      })
+        .then((response) => {
+          resolve(response.data.body);
+        }, (error) => {
+          console.log(error);
+          throw new TypeError('Error #0 while executing Promise of getProject.');
+        });
+    })
+  }
+
+  /**
    * Retrieve a single section.
    *
    * @constructor
@@ -387,5 +443,6 @@ export function MBurgerInstance(axiosInstance) {
     getSection: getSection,
     getBlock: getBlock,
     getBlocks: getBlocks,
+    getProject: getProject,
   };
 }
