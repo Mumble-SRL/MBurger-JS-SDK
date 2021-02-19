@@ -8,11 +8,15 @@ This package can be installed via the most common Javascript package managers:
 
 ### 1.1 - NPM 
 
-    npm i mburger --save
+```console
+npm i mburger --save
+```
 
 ### 1.1 - Yarn 
 
-    yarn add mburger --save
+```console
+yarn add mburger --save
+```
 
 ## 2.0 - Configuration
 
@@ -25,11 +29,11 @@ In the current version of our JS SDK you can find only a few methods that you ca
 ### 3.1 - Initiate the connection
 
 Init the connection to MBurger with your API Key.
-
-    const instance = mburger.createClient({
-        api_key: '1234567890'
-    });
-
+```javascript
+const instance = mburger.createClient({
+    api_key: '1234567890'
+});
+```
 
 ### 3.2 - Retrieve a single Section
 
@@ -43,20 +47,22 @@ Init the connection to MBurger with your API Key.
 
 #### 3.2.1 - Sample code
 
-     // Import MBurger SDK
-     const mburger = require('mburger');
-     
-    // Init the connection
-    const instance = mburger.createClient({
-        api_key: '1234567890'
-    });
+```javascript
+ // Import MBurger SDK
+ const mburger = require('mburger');
 
-    // Get a specific block
-    instance.getSection({
-        section_id: 10088,
-        locale: 'it',
-        original_media: false
-    }).then(result => console.log(result));
+// Init the connection
+const instance = mburger.createClient({
+    api_key: '1234567890'
+});
+
+// Get a specific block
+instance.getSection({
+    section_id: 10088,
+    locale: 'it',
+    original_media: false
+}).then(result => console.log(result));
+```
 
 ### 3.3 - Retrieve a single Block
 
@@ -71,20 +77,22 @@ Init the connection to MBurger with your API Key.
 
 #### 3.3.1 - Sample code
 
-     // Import MBurger SDK
-     const mburger = require('mburger');
-     
-    // Init the connection
-    const instance = mburger.createClient({
-        api_key: '1234567890'
-    });
+```javascript
+ // Import MBurger SDK
+ const mburger = require('mburger');
 
-    // Retrieve a specific block
-    instance.getBlock({
-        block_id: 884,
-        locale: 'it',
-        original_media: false
-    }).then(result => console.log(result));
+// Init the connection
+const instance = mburger.createClient({
+    api_key: '1234567890'
+});
+
+// Retrieve a specific block
+instance.getBlock({
+    block_id: 884,
+    locale: 'it',
+    original_media: false
+}).then(result => console.log(result));
+```
 
 ### 3.4 - Retrieve multiple Blocks
 
@@ -96,20 +104,21 @@ Init the connection to MBurger with your API Key.
 
 #### 3.4.1 - Sample code
 
-    // Import MBurger SDK
-    const mburger = require('mburger');
-    
-    // Init the connection
-    const instance = mburger.createClient({
-        api_key: '1234567890'
-    });
-    
-    // Retrieve data from the block
-    instance.getBlocks({
-        block_ids: [884, 886],
-        locale: 'it'
-    }).then(result => console.log(result));
+```javascript
+// Import MBurger SDK
+const mburger = require('mburger');
 
+// Init the connection
+const instance = mburger.createClient({
+    api_key: '1234567890'
+});
+
+// Retrieve data from the block
+instance.getBlocks({
+    block_ids: [884, 886],
+    locale: 'it'
+}).then(result => console.log(result));
+```
 
 ## 4.0 - Support & Feedback
 
