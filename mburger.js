@@ -12,7 +12,6 @@
  */
 
 const axios = require("axios");
-const qs = require("qs");
 
 const host = "https://mburger.cloud/api/";
 const headers = {
@@ -100,9 +99,6 @@ export function MBurgerInstance(axiosInstance) {
       axiosInstance.get(host + path, {
         params: query,
         headers: headers,
-        paramsSerializer: params => {
-          return qs.stringify(params)
-        }
       })
         .then((response) => {
           resolve(response.data.body);
@@ -278,9 +274,6 @@ export function MBurgerInstance(axiosInstance) {
         .get(host + path, {
           params: query,
           headers: headers,
-          paramsSerializer: (params) => {
-            return qs.stringify(params);
-          },
         })
         .then(
           (response) => {
@@ -376,9 +369,6 @@ export function MBurgerInstance(axiosInstance) {
         .get(host + path, {
           params: query,
           headers: headers,
-          paramsSerializer: (params) => {
-            return qs.stringify(params);
-          },
         })
         .then(
           (response) => {
