@@ -11,7 +11,8 @@
  *
  */
 
-import axios, {AxiosInstance} from "axios";
+import {AxiosInstance} from "axios";
+const axios = require("axios")
 
 const host = "https://mburger.cloud/api/";
 const headers = {

@@ -60,7 +60,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.MBurgerInstance = exports.createClient = void 0;
-var axios_1 = require("axios");
+var axios = require("axios");
 var host = "https://mburger.cloud/api/";
 var headers = {
     Accept: "application/json",
@@ -70,7 +70,7 @@ function createClient(params) {
     if (!params.api_key) {
         throw new TypeError("You have to initialize the Client with an API Key. Visit support.mburger.cloud for more informations");
     }
-    return MBurgerInstance(axios_1["default"].create({
+    return MBurgerInstance(axios.create({
         baseURL: host,
         headers: __assign({ "X-MBurger-Token": params.api_key }, headers)
     }));
