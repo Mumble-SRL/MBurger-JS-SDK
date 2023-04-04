@@ -60,19 +60,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.MBurgerInstance = exports.createClient = void 0;
-var axios = require("axios");
-var host = "https://mburger.cloud/api/";
+var axios_1 = require("axios");
+var host = 'https://mburger.cloud/api/';
 var headers = {
-    Accept: "application/json",
-    "X-MBurger-Version": 3
+    Accept: 'application/json',
+    'X-MBurger-Version': 3
 };
+// TODO. Implement caching
+/**
+ * Initiate an MBurger connection.
+ *
+ * @constructor
+ * @param {string} params.api_key - MBurger project API Key.
+ * @returns {MBurgerInstance}
+ * @example
+ * // Import MBurger SDK
+ * const mburger = require('mburger');
+ *
+ * // Init the connection
+ *  const instance = mburger.createClient({
+ *     api_key: '1234567890'
+ *   });
+ *
+ */
 function createClient(params) {
     if (!params.api_key) {
-        throw new TypeError("You have to initialize the Client with an API Key. Visit support.mburger.cloud for more informations");
+        throw new TypeError('You have to initialize the Client with an API Key. Visit support.mburger.cloud for more informations');
     }
-    return MBurgerInstance(axios.create({
+    return MBurgerInstance(axios_1["default"].create({
         baseURL: host,
-        headers: __assign({ "X-MBurger-Token": params.api_key }, headers)
+        headers: __assign({ 'X-MBurger-Token': params.api_key }, headers)
     }));
 }
 exports.createClient = createClient;
@@ -116,16 +133,16 @@ function MBurgerInstance(axiosInstance) {
                 }
                 else
                     query = null;
-                return [2 /*return*/, new Promise(function (resolve) {
-                        axiosInstance.get(host + path, {
+                return [2 /*return*/, new Promise(function (resolve, rejects) {
+                        axiosInstance
+                            .get(host + path, {
                             params: query,
                             headers: headers
                         })
                             .then(function (response) {
                             resolve(response.data.body);
                         }, function (error) {
-                            console.log(error);
-                            throw new TypeError('Error #0 while executing Promise of getProject.');
+                            rejects(error);
                         });
                     })];
             });
@@ -158,15 +175,16 @@ function MBurgerInstance(axiosInstance) {
      *   }).then(result => console.log(result));
      */
     function getSection(params) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var path, query;
-            return __generator(this, function (_a) {
+            var path, query, size;
+            return __generator(this, function (_b) {
                 if (!params.section_id) {
-                    throw new TypeError("You have to speficy a section_id. Visit support.mburger.cloud for more informations");
+                    throw new TypeError('You have to speficy a section_id. Visit support.mburger.cloud for more informations');
                 }
-                path = "sections/" + params.section_id;
+                path = 'sections/' + params.section_id;
                 query = {
-                    include: "elements"
+                    include: 'elements'
                 };
                 if (params.locale) {
                     query.locale = params.locale;
@@ -180,6 +198,7 @@ function MBurgerInstance(axiosInstance) {
                 if (params.use_slug) {
                     query.use_slug = params.use_slug;
                 }
+                size = (_a = params.size) !== null && _a !== void 0 ? _a : 'short';
                 return [2 /*return*/, new Promise(function (resolve, rejects) {
                         axiosInstance
                             .get(host + path, {
@@ -187,22 +206,27 @@ function MBurgerInstance(axiosInstance) {
                             headers: headers
                         })
                             .then(function (response) {
-                            var section = {};
-                            section.body = {};
-                            section.meta = {};
-                            for (var key in response.data.body.elements) {
-                                section.body[key] = response.data.body.elements[key].value;
+                            if (size === 'short') {
+                                var section = response.data.body;
+                                var elements = section.elements;
+                                var responseShort = {
+                                    id: section.id,
+                                    visible: section.visible,
+                                    available_at: section.available_at,
+                                    updated_at: section.updated_at
+                                };
+                                for (var key in elements) {
+                                    // @ts-ignore
+                                    responseShort[key] = section.elements[key].value;
+                                }
+                                resolve(responseShort);
                             }
-                            section.meta.id = response.data.body.id;
-                            section.meta.updated_at = response.data.body.updated_at;
-                            section.meta.available_at = response.data.body.available_at;
-                            section.meta.order = response.data.body.order;
-                            section.meta.in_evidence = response.data.body.in_evidence;
-                            section.meta.visible = response.data.body.visible;
-                            section.meta.all_locales = response.data.body.all_locales;
-                            resolve(section);
+                            else {
+                                var responseFull = response.data.body;
+                                resolve(responseFull);
+                            }
                         }, function (error) {
-                            rejects(new TypeError("Error #1 while executing Promise of getSection."));
+                            rejects(error);
                         });
                     })];
             });
@@ -218,7 +242,7 @@ function MBurgerInstance(axiosInstance) {
      * @param {object} params.extra_params={} - The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations.
      * @param {boolean} params.order_desc=true - Express if you want the data in ascendent or descendent order.
      * @param {boolean} params.force_locale_fallback=false - Set the parameters force_locale_fallback as indicated in the documentation.
-     * @param {boolean} params.filter={} - Set the filters as indicated in the official documentation.
+     * @param {object} params.filter={} - Set the filters as indicated in the official documentation.
      * @returns {object}
      * @example
      * // Import MBurger SDK
@@ -235,22 +259,23 @@ function MBurgerInstance(axiosInstance) {
      *       locale: 'it',
      *       original_media: false,
      *       filter: {
-     *           'value': 'chiave 1, chiave 2'
+     *           'value': 'chiave 1,chiave 2'
      *       }
      * }).then(result => console.log(result));
      *
      */
-    function getBlock(params) {
+    function getSections(params) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var path, query, _i, _a, _b, key, value;
-            return __generator(this, function (_c) {
+            var path, query, _i, _b, _c, key, value, size;
+            return __generator(this, function (_d) {
                 if (!params.block_id) {
-                    throw new TypeError("You have to speficy a block_id. Visit support.mburger.cloud for more informations");
+                    throw new TypeError('You have to speficy a block_id. Visit support.mburger.cloud for more informations');
                 }
-                path = "blocks/" + params.block_id + "/sections";
+                path = 'blocks/' + params.block_id + '/sections';
                 query = {
-                    include: "elements",
-                    sort: "order"
+                    include: 'elements',
+                    sort: 'order'
                 };
                 if (params.force_locale_fallback) {
                     query.force_locale_fallback = params.force_locale_fallback;
@@ -262,18 +287,19 @@ function MBurgerInstance(axiosInstance) {
                     query.original_media = params.original_media;
                 }
                 if (params.order_desc) {
-                    query.sort = "-order";
+                    query.sort = '-order';
                 }
                 if (params.filter) {
-                    query.filter = [];
-                    for (_i = 0, _a = Object.entries(params.filter); _i < _a.length; _i++) {
-                        _b = _a[_i], key = _b[0], value = _b[1];
+                    query.filter = {};
+                    for (_i = 0, _b = Object.entries(params.filter); _i < _b.length; _i++) {
+                        _c = _b[_i], key = _c[0], value = _c[1];
                         query.filter[key] = value;
                     }
                 }
                 if (params.extra_params) {
                     query = __assign(__assign({}, query), params.extra_params);
                 }
+                size = (_a = params.size) !== null && _a !== void 0 ? _a : 'short';
                 return [2 /*return*/, new Promise(function (resolve, rejects) {
                         axiosInstance
                             .get(host + path, {
@@ -281,25 +307,32 @@ function MBurgerInstance(axiosInstance) {
                             headers: headers
                         })
                             .then(function (response) {
-                            var items = response.data.body.items.map(function (value) {
-                                var section = {};
-                                section.body = {};
-                                section.meta = {};
-                                for (var key in value.elements) {
-                                    section.body[key] = value.elements[key].value;
-                                }
-                                section.meta.id = value.id;
-                                section.meta.updated_at = value.updated_at;
-                                section.meta.available_at = value.available_at;
-                                section.meta.order = value.order;
-                                section.meta.in_evidence = value.in_evidence;
-                                section.meta.visible = value.visible;
-                                section.meta.all_locales = value.all_locales;
-                                return section;
-                            });
-                            resolve(items);
+                            if (size === 'short') {
+                                var responseShort = response.data.body.items.map(function (section) {
+                                    var elements = section.elements;
+                                    var result = {
+                                        id: section.id,
+                                        visible: section.visible,
+                                        available_at: section.available_at,
+                                        updated_at: section.updated_at
+                                    };
+                                    for (var key in elements) {
+                                        // @ts-ignore
+                                        result[key] = section.elements[key].value;
+                                    }
+                                    return result;
+                                });
+                                resolve(responseShort);
+                            }
+                            else {
+                                var responseFull = {
+                                    sections: response.data.body.items,
+                                    meta: response.data.body.meta
+                                };
+                                resolve(responseFull);
+                            }
                         }, function (error) {
-                            rejects(new TypeError("Error #2 while executing Promise of getBlock."));
+                            rejects(error);
                         });
                     })];
             });
@@ -311,7 +344,7 @@ function MBurgerInstance(axiosInstance) {
      * @constructor
      * @param {array} params.block_ids - ID of the requested Blocks.
      * @param {string} params.locale - Country code of the required locale.
-     * @param {boolean} params.filter={} - Set the filters as indicated in the official documentation.
+     * @param {object} params.filter={} - Set the filters as indicated in the official documentation.
      * @returns {object}
      * @example
      *   // Import MBurger SDK
@@ -333,31 +366,33 @@ function MBurgerInstance(axiosInstance) {
      *
      */
     function getBlocks(params) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var path, query, _i, _a, _b, key, value;
-            return __generator(this, function (_c) {
-                path = "blocks";
+            var path, query, _i, _b, _c, key, value, size;
+            return __generator(this, function (_d) {
+                path = 'blocks';
                 if (!params.block_ids) {
-                    throw new TypeError("You have to speficy the block_ids value (array). Visit support.mburger.cloud for more informations");
+                    throw new TypeError('You have to speficy the block_ids value (array). Visit support.mburger.cloud for more informations');
                 }
                 query = {
-                    include: "sections.elements",
-                    sort: "order"
+                    include: 'sections.elements',
+                    sort: 'order'
                 };
                 if (params.locale) {
                     query.locale = params.locale;
                 }
                 if (params.filter) {
                     query.filter = { id: params.block_ids.join() };
-                    for (_i = 0, _a = Object.entries(params.filter); _i < _a.length; _i++) {
-                        _b = _a[_i], key = _b[0], value = _b[1];
+                    for (_i = 0, _b = Object.entries(params.filter); _i < _b.length; _i++) {
+                        _c = _b[_i], key = _c[0], value = _c[1];
                         query.filter[key] = value;
                     }
                 }
                 if (!query.filter) {
                     query.filter = {};
                 }
-                query.filter["id"] = params.block_ids.join();
+                query.filter['id'] = params.block_ids.join();
+                size = (_a = params.size) !== null && _a !== void 0 ? _a : 'short';
                 return [2 /*return*/, new Promise(function (resolve, rejects) {
                         axiosInstance
                             .get(host + path, {
@@ -365,63 +400,46 @@ function MBurgerInstance(axiosInstance) {
                             headers: headers
                         })
                             .then(function (response) {
-                            var blocks = response.data.body.items.map(function (block, i) {
-                                return block;
-                            });
-                            var out = {};
-                            var sections = blocks.map(function (value, i) {
-                                var sections = value.sections;
-                                return sections.map(function (value, i) {
-                                    var item = {};
-                                    item.body = {};
-                                    item.meta = {};
-                                    for (var key in value.elements) {
-                                        item.body[key] = value.elements[key].value;
-                                    }
-                                    item.meta = {
-                                        all_locales: value.all_locales,
-                                        available_at: value.available_at,
-                                        id: value.id,
-                                        in_evidence: value.in_evidence,
-                                        order: value.order,
-                                        updated_at: value.updated_at,
-                                        visible: value.visible
-                                    };
-                                    return item;
+                            if (size === 'short') {
+                                var blocks = response.data.body.items;
+                                var responseShort = blocks.map(function (block) {
+                                    var sections = block.sections.map(function (section) {
+                                        var elements = section.elements;
+                                        var result = {
+                                            id: section.id,
+                                            visible: section.visible,
+                                            available_at: section.available_at,
+                                            updated_at: section.updated_at
+                                        };
+                                        for (var key in elements) {
+                                            // @ts-ignore
+                                            result[key] = section.elements[key].value;
+                                        }
+                                        return result;
+                                    });
+                                    return __assign(__assign({}, block), { sections: sections });
                                 });
-                            });
-                            var metas = blocks.map(function (value, i) {
-                                return {
-                                    id: value.id,
-                                    available_at: value.available_at,
-                                    updated_at: value.updated_at,
-                                    in_evidence: value.in_evidence,
-                                    order: value.order,
-                                    all_locales: value.all_locales
-                                };
-                            });
-                            for (var _i = 0, _a = Object.entries(blocks); _i < _a.length; _i++) {
-                                var _b = _a[_i], i = _b[0], value = _b[1];
-                                // @ts-ignore
-                                out[value.title] = {};
-                                // @ts-ignore
-                                out[value.title]["body"] = sections[i];
-                                // @ts-ignore
-                                out[value.title]["meta"] = metas[i];
+                                resolve(responseShort);
                             }
-                            resolve(out);
+                            else {
+                                var responseShort = {
+                                    blocks: response.data.body.items,
+                                    meta: response.data.body.meta
+                                };
+                                resolve(responseShort);
+                            }
                         }, function (error) {
-                            rejects(new TypeError("Error #3 while executing Promise of getBlocks."));
+                            rejects(error);
                         });
                     })];
             });
         });
     }
     return {
+        getProject: getProject,
         getSection: getSection,
-        getBlock: getBlock,
-        getBlocks: getBlocks,
-        getProject: getProject
+        getSections: getSections,
+        getBlocks: getBlocks
     };
 }
 exports.MBurgerInstance = MBurgerInstance;

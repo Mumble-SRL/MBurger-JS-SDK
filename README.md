@@ -37,12 +37,13 @@ const instance = mburger.createClient({
 
 ### 3.2 - Retrieve a single Section
 
-| Specification | Data Type | Description |
-|---|---|---|
-| section_id | Integer | ID of the requested Section |
-| original_media | Boolean | Indicate if you want the original media or the converted ones |
-| use_slug | Boolean | Declare if you want to use the section slug instead of the ID to retrieve data |
-| locale | String | Country code of the required locale |
+| Specification  | Data Type       | Description                                                                         |
+|----------------|-----------------|-------------------------------------------------------------------------------------|
+| section_id     | Integer         | ID of the requested Section                                                         |
+| original_media | Boolean         | Indicate if you want the original media or the converted ones                       |
+| use_slug       | Boolean         | Declare if you want to use the section slug instead of the ID to retrieve data      |
+| locale         | String          | Country code of the required locale                                                 |
+| size           | `full`, `short` | Declare if you want the full response or the short version. The default is `short`. |
 
 
 #### 3.2.1 - Sample code
@@ -64,16 +65,17 @@ instance.getSection({
 }).then(result => console.log(result));
 ```
 
-### 3.3 - Retrieve a single Block
+### 3.3 - Retrieve a Block's section
 
-| Specification | Data Type | Description |
-|---|---|---|
-| block_id | Integer | ID of the requested Block |
-| force_locale_fallback | Boolean | Set the parameters force_locale_fallback as indicated in the documentation |
-| locale | String | Country code of the required locale |
-| original_media | Boolean | Indicate if you want the original media or the converted ones |
-| params | Object | The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations |
-| order_asc | Boolean | Declare if you want the data in ascendent or descendent order |
+| Specification         | Data Type       | Description                                                                                                   |
+|-----------------------|-----------------|---------------------------------------------------------------------------------------------------------------|
+| block_id              | Integer         | ID of the requested Block                                                                                     |
+| force_locale_fallback | Boolean         | Set the parameters force_locale_fallback as indicated in the documentation                                    |
+| locale                | String          | Country code of the required locale                                                                           |
+| original_media        | Boolean         | Indicate if you want the original media or the converted ones                                                 |
+| params                | Object          | The parameters you want to pass to the MBurger params variable. Check our API Reference for more informations |
+| order_asc             | Boolean         | Declare if you want the data in ascendent or descendent order                                                 |
+| size                  | `full`, `short` | Declare if you want the full response or the short version. The default is `short`.                           |
 
 #### 3.3.1 - Sample code
 
@@ -86,8 +88,8 @@ const instance = mburger.createClient({
     api_key: '1234567890'
 });
 
-// Retrieve a specific block
-instance.getBlock({
+// Retrieve a specific block's sections
+instance.getSections({
     block_id: 884,
     locale: 'it',
     original_media: false
@@ -96,11 +98,12 @@ instance.getBlock({
 
 ### 3.4 - Retrieve multiple Blocks
 
-| Specification | Data Type | Description |
-|---|---|---|
-| block_ids | Array | ID of the requested Blocks |
-| filters | Object | The filters you want to pass to the MBurger params variable. Check our API Reference for more informations |
-| order_asc | Boolean | Declare if you want the data in ascendent or descendent order |
+| Specification | Data Type       | Description                                                                                                |
+|---------------|-----------------|------------------------------------------------------------------------------------------------------------|
+| block_ids     | Array           | ID of the requested Blocks                                                                                 |
+| filters       | Object          | The filters you want to pass to the MBurger params variable. Check our API Reference for more informations |
+| order_asc     | Boolean         | Declare if you want the data in ascendent or descendent order                                              |
+| size          | `full`, `short` | Declare if you want the full response or the short version. The default is `short`.                        |
 
 #### 3.4.1 - Sample code
 
